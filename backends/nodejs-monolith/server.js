@@ -11,7 +11,7 @@ const authentication = require('./routers/authentication')
 const config = require('./config')
 
 const accessTokenSecret = process.env.ACCESS_TOKEN_SECRET || 'changeme'
-const esEndpoint        = process.env.ES_ENDPOINT || 'tcp://localhost:1113'
+const esEndpoint        = process.env.ES_ENDPOINT || config.eventstore || 'tcp://localhost:1113'
 const port              = process.env.PORT || 3000
 
 const getComments = es => async ctx => {

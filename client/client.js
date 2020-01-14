@@ -1,6 +1,6 @@
 /**
- * Some Comments - a comment engine
- * Copyright (C) 2015 Fredrik Liljegren
+ * Oratorium - a comment engine
+ * Copyright (C) 2020 Fredrik Liljegren
  *
  * @license magnet:?xt=urn:btih:0b31508aeb0634b347b8270c7bee4d411b5d4109&dn=agpl-3.0.txt
  * GNU-AGPL-3.0
@@ -74,10 +74,10 @@
     ]
   )
 
-  const someCommentInfo = h(
-    'div', { class: 'some_comment_info' }, h(
+  const oratoriumInfo = h(
+    'div', { class: 'oratorium_info' }, h(
       'p', null, [
-        h('a', { href: 'https://github.com/fiddur/some-comments' }, 'Some Comments'),
+        h('a', { href: 'https://github.com/fiddur/oratorium-commenting' }, 'Oratorium Commenting'),
         ' ©Fredrik Liljegren 2020 ',
         h('a', { href: 'http://www.gnu.org/licenses/agpl-3.0.html' }, 'GNU AGPL-3.0'),
       ]
@@ -123,9 +123,9 @@
     ]
     const loginBox = user.loginRequested ? renderLogin({ server, authenticators }) : ''
 
-    return h('div', { class: 'some_comments' }, [
+    return h('div', { class: 'oratorium' }, [
       h('div', { class: 'comments_container' }, rows),
-      someCommentInfo, loginBox,
+      oratoriumInfo, loginBox,
     ])
   }
 
@@ -198,7 +198,7 @@
       dispatch({ type, data }) {
         if (type in store.apply) store.state = store.apply[type](store.state, data)
         store.listeners.forEach(listener => listener(store.state))
-        console.log('new state', store.state)
+        // console.log('new state', store.state)
       },
 
       addListener(listener) { store.listeners.add(listener) },
@@ -242,9 +242,9 @@
     return { mount }
   }
 
-  const SomeComments = server => ({ comments: Comments(server) })
+  const Oratorium = server => ({ comments: Comments(server) })
 
-  window.SomeComments = SomeComments // eslint-disable-line no-param-reassign
+  window.Oratorium = Oratorium // eslint-disable-line no-param-reassign
 })(window)
 
 // @license-end

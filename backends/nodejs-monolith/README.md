@@ -2,6 +2,8 @@ Add a config.js like this:
 
 ```javascript
 module.exports = {
+  eventstore: 'tcp://localhost:1113',
+
   host: 'http://ydalar.xn--hksgrd-juac2m.se:3000',
 
   oidcProviders: {

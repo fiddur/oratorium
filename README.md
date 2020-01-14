@@ -1,14 +1,15 @@
 Oratorium Commenting
 ====================
 
-**Oratorium Commenting** is stand-alone commenting service that you could
-attach by including javascript on any page.
+**Oratorium** is stand-alone commenting service that you could attach by
+including javascript on any page.
 
-This was initially constructed because Ghost has no built in commenting
-functionality and I don't want ads funded commenting, nor tie it to one
-specific social platform.
+This was initially constructed because [Ghost](https://ghost.org/) has no built
+in commenting functionality and I don't want ads funded commenting, nor tie it
+to one specific social platform.
 
-Commenters must authenticate via the OpenID Connect protocol (supported by
+Commenters must authenticate via the
+[OpenID Connect](https://openid.net/connect/) protocol (supported by
 e.g. Google).  (Anonymous commenting removed.)
 
 I'm using this repo to try out architectures and language solutions.  It will
@@ -78,10 +79,10 @@ License ([GNU AGPLv3](http://www.gnu.org/licenses/agpl-3.0.html))
 
 Copyright (C) 2020 Fredrik Liljegren <fredrik@liljegren.org>
 
-Oratorium Commenting is free software: you can redistribute it and/or modify it
-under the terms of the GNU Affero General Public License as published by the
-Free Software Foundation, either version 3 of the License, or (at your option)
-any later version.
+Oratorium is free software: you can redistribute it and/or modify it under the
+terms of the GNU Affero General Public License as published by the Free
+Software Foundation, either version 3 of the License, or (at your option) any
+later version.
 
 This program is distributed in the hope that it will be useful, but WITHOUT ANY
 WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A

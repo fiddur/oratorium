@@ -2,7 +2,7 @@ const { Issuer, generators } = require('openid-client')
 const koaRouter = require('koa-router')
 const jwt       = require('jsonwebtoken')
 
-const authentication = async ({ config: { host, oidcProviders }, accessTokenSecret }) => {
+const authRoutes = async ({ config: { host, oidcProviders }, accessTokenSecret }) => {
   const router = koaRouter()
 
   const clients = Object.fromEntries(await Promise.all(
@@ -64,10 +64,10 @@ const authentication = async ({ config: { host, oidcProviders }, accessTokenSecr
     `
   }
 
-  router.get('/auth/:provider', getAuth)
-  router.get('/auth/:provider/callback', getAuthCallback)
-
-  return router.routes()
+  return router
+    .get('/auth/:provider', getAuth)
+    .get('/auth/:provider/callback', getAuthCallback)
+    .routes()
 }
 
-module.exports = authentication
+module.exports = authRoutes

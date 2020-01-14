@@ -60,6 +60,31 @@ Server setup
    * [Node.js monolithic service](./backends/nodejs-monolith).
 
 
+Work in progress
+----------------
+
+This is a hobby project, getting just occational focus when I have time over.
+It does work for my purposes, but there's much wanting.
+
+Todo:
+
+* Check identity async - get user identity from `/users/me` endpoint to
+  pre-show already logged in user picture.
+* Authenticators - fetch authenticators from backend to show list.
+* Singe authenticator immediate redirect?
+* Subscription - add anyone commenting as subscriber.  Make endpoint to
+  unsubscribe from page.  Need page url to ID relation.
+* Delete comment - authenticated user deleting her own comment, site admin
+  deleting any comment. (includes adding site admin)
+* Backends in other languages/styles
+  * Python
+  * Golang
+  * Haskell
+  * Typescript
+  * Microservice node.js - one service per endpoint, fat read sides
+  * Serverless kubernetes/istio/...
+
+
 Changelog
 ---------
 

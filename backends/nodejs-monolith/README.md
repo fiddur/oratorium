@@ -8,6 +8,8 @@ module.exports = {
 
   oidcProviders: {
     google: {
+      title:         'Google',
+      icon:          'https://upload.wikimedia.org/wikipedia/commons/4/4d/Google_Icon.svg',
       issuer:        'https://accounts.google.com',
       client_id:     'get your',
       client_secret: 'own',

@@ -77,7 +77,7 @@
   const oratoriumInfo = h(
     'div', { class: 'oratorium_info' }, h(
       'p', null, [
-        h('a', { href: 'https://github.com/fiddur/oratorium-commenting' }, 'Oratorium Commenting'),
+        h('a', { href: 'https://github.com/fiddur/oratorium' }, 'Oratorium'),
         ' ©Fredrik Liljegren 2020 ',
         h('a', { href: 'http://www.gnu.org/licenses/agpl-3.0.html' }, 'GNU AGPL-3.0'),
       ]

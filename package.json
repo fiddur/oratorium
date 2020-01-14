@@ -1,5 +1,6 @@
 {
-  "name": "some-comments",
+  "name": "oratorium",
+  "description": "Oratorium Commenting system",
   "version": "1.0.0",
   "main": "index.js",
   "author": "fredrik@liljegren.org",

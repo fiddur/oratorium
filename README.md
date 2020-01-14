@@ -1,62 +1,87 @@
-Some comments
-=============
+Oratorium Commenting
+====================
 
-**Some comments** is stand-alone commenting microservice that you could attach
-by including javascript.
+**Oratorium Commenting** is stand-alone commenting service that you could
+attach by including javascript on any page.
 
 This was initially constructed because Ghost has no built in commenting
 functionality and I don't want ads funded commenting, nor tie it to one
 specific social platform.
 
-Commenters can authenticate via the OpenID Connect protocol (supported by
-e.g. Google) or comment anonymously with a name.
+Commenters must authenticate via the OpenID Connect protocol (supported by
+e.g. Google).  (Anonymous commenting removed.)
 
-This is a split up, polyglot CQRS microservices playground and showcase.  The
-goal is to show benefits and costs of that type of architecture, while trying
-out approaches.
+I'm using this repo to try out architectures and language solutions.  It will
+contain more than one implementation of the backend.  Currently, a monolithic
+Node.js version is the only one.
+
+Backend uses event sourcing, jwt access tokens and openid connect
+authentication protocol.  See more in [HACKING.md](./HACKING.md).
+
+
+Frontend setup
+--------------
+
+```bash
+cd client
+yarn install ; or npm install
+```
+
+Link the client directory so it is reachable from your frontend (in https if
+that's what your frontend uses).  In Ghost (blog), I've added this for the post
+page (linking the clients directory into the theme's assets):
+
+```html
+<link href="{{asset "comments/comments.css"}}" rel="stylesheet" />
+
+...
+
+<div class="comments" id="comments"></div>
+<script src="{{asset "comments/node_modules/markdown/lib/markdown.js"}}"></script>
+<script src="{{asset "comments/node_modules/preact/dist/preact.dev.js"}}"></script>
+<script src="{{asset "comments/client.js"}}"></script>
+<script>
+  SomeComments('https://fredrik.liljegren.org/comments')
+    .comments('{{id}}')
+    .mount(document.getElementById('comments'))
+</script>
+</script>
+```
+
+Naturally, you might want to use non-dev preact etc in a production environment.
 
 
 Server setup
 ------------
 
-### Routing
+See respective server for setup instructions.
 
-Each endpoint is in its own service, having different implementations.  Start
-up at least one version of each endpoint, use a proxy like haproxy or nginx to
-route:
+* [Node.js monolithic service](./backends/nodejs-monolith).
 
-* POST /login
-* POST /comments/
-* GET /comments/
-
-
-### Startup server cluster locally
-
-Probably:
-
-```
-SC_CONFIG_FILE=config.js make start
-```
 
 Changelog
 ---------
 
-### 0.5.0
+### 1.0.0
 
-**Breaking version**
+Forking off of my old [Some Comments](https://github.com/fiddur/some-comments),
+making some new proof-of-concept backends, using event sourcing with
+[EventStore](https://eventstore.org/) as backend.
 
-Breaking completely with older versions in both architecture and datastore.
+Yes, I know that this is more cumbersome to quickly setup than just using
+sqlite, but using event sourcing is a relevant part of the architectural PoCs
+I'm making.
 
 
 License ([GNU AGPLv3](http://www.gnu.org/licenses/agpl-3.0.html))
 -----------------------------------------------------------------
 
-Copyright (C) 2015 Fredrik Liljegren <fredrik@liljegren.org>
+Copyright (C) 2020 Fredrik Liljegren <fredrik@liljegren.org>
 
-Some Comments is free software: you can redistribute it and/or modify it under
-the terms of the GNU Affero General Public License as published by the Free
-Software Foundation, either version 3 of the License, or (at your option) any
-later version.
+Oratorium Commenting is free software: you can redistribute it and/or modify it
+under the terms of the GNU Affero General Public License as published by the
+Free Software Foundation, either version 3 of the License, or (at your option)
+any later version.
 
 This program is distributed in the hope that it will be useful, but WITHOUT ANY
 WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A

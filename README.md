@@ -54,9 +54,9 @@ Naturally, you might want to use non-dev preact etc in a production environment.
 Server setup
 ------------
 
-See respective server for setup instructions.
-
-* [Node.js monolithic service](./backends/nodejs-monolith).
+1. Setup [EventStore](https://eventstore.org/).
+2. See respective server for setup instructions.
+   * [Node.js monolithic service](./backends/nodejs-monolith).
 
 
 Changelog

@@ -1,0 +1,5 @@
+{
+  "extends": "@tsconfig/node14/tsconfig.json",
+  "include": ["server.ts", "config.ts", "**/*"],
+  "exclude": ["node_modules", "**/*.spec.ts"]
+}

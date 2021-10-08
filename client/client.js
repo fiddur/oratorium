@@ -95,16 +95,16 @@
     h('div', { class: 'login' }, [
       h('h1', null, 'Authenticate with…'),
       h('ul', { class: 'login_list' }, [
-        ...authenticators.map((authenticator) =>
+        ...authenticators.map(({ icon, title, shortName }) =>
           h(
             'li',
             null,
             h('input', {
               type: 'image',
-              src: authenticator.icon,
+              src: icon,
               class: 'authicon',
-              value: `${authenticator.title} ..`,
-              onClick: openAuthWindow(`${server}/auth/${authenticator.id}`),
+              value: `${title} ..`,
+              onClick: openAuthWindow(`${server}/auth/${shortName}`),
             }),
           ),
         ),
@@ -113,7 +113,7 @@
 
   const renderComments = ({
     server,
-    state: { comments, newComment, user },
+    state: { comments, newComment, user, authenticators },
     commands: { attemptAddComment, updateNewComment },
   }) => {
     const rows = comments.map((comment) => renderCommentRow({ comment, user }))
@@ -127,14 +127,6 @@
       }),
     )
 
-    const authenticators = [
-      // TODO: Fetch as metadata.
-      {
-        title: 'Google',
-        id: 'google',
-        icon: 'https://upload.wikimedia.org/wikipedia/commons/4/4d/Google_Icon.svg',
-      },
-    ]
     const loginBox = user.loginRequested ? renderLogin({ server, authenticators }) : ''
 
     return h('div', { class: 'oratorium' }, [
@@ -207,12 +199,14 @@
         loginRequested: (state) => ({ ...state, user: { loginRequested: true } }),
         authenticationRejected: (state) => ({ ...state, user: {} }),
         userAuthenticated: (state, { user }) => ({ ...state, user }),
+
+        authenticatorsLoaded: (state, { authenticators }) => ({ ...state, authenticators }),
       },
 
       dispatch({ type, data }) {
         if (type in store.apply) store.state = store.apply[type](store.state, data)
         store.listeners.forEach((listener) => listener(store.state))
-        // console.log('new state', store.state)
+        console.log('new state', store.state)
       },
 
       addListener(listener) {
@@ -229,8 +223,16 @@
       comments.forEach(onComment)
     }
 
-    const mount = (element) => {
+    const mount = async (element) => {
       get({ onComment: store.commands.storeComment })
+
+      const authenticators = await (
+        await fetch(`${server}/auth/providers`, {
+          method: 'GET',
+          mode: 'cors',
+        })
+      ).json()
+      store.dispatch({ type: 'authenticatorsLoaded', data: { authenticators } })
 
       const previous = render(
         renderComments({ server, state: store.state, commands: store.commands }),

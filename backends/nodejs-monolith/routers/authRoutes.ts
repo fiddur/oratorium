@@ -8,6 +8,8 @@ interface OidcProvider {
   client_id: string
   client_secret: string
   issuer: string
+  title: string
+  icon: string
 }
 
 export const authRoutes = async ({
@@ -35,6 +37,16 @@ export const authRoutes = async ({
       }),
     ),
   )
+
+  router.get('/auth/providers', (ctx) => {
+    ctx.set('Cache-Control', 'no-store, no-cache, must-revalidate')
+    ctx.set('Pragma', 'no-cache')
+    ctx.set('Expires', '0')
+    // ctx.cookies.set('accessToken', accessToken)
+    ctx.body = JSON.stringify(
+      Object.entries(oidcProviders).map(([shortName, { title, icon }]) => ({ shortName, title, icon })),
+    )
+  })
 
   router.get('/auth/:provider', (ctx) => {
     const { provider } = ctx.params

@@ -71,10 +71,12 @@ export const authRoutes = async ({
     ctx.set('Expires', '0')
     ctx.cookies.set('accessToken', accessToken)
     ctx.body = `
+      <html><head></head><body>
       <script>
         window.opener.postMessage({ authenticated: true, user: ${JSON.stringify({ user })}}, '*')
         window.close()
       </script>
+      </body></html>
     `
   })
 

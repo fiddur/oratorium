@@ -70,12 +70,16 @@ Todo:
 
 * Check identity async - get user identity from `/users/me` endpoint to
   pre-show already logged in user picture.
-* Authenticators - fetch authenticators from backend to show list.
-* Singe authenticator immediate redirect?
 * Subscription - add anyone commenting as subscriber.  Make endpoint to
   unsubscribe from page.  Need page url to ID relation.
 * Delete comment - authenticated user deleting her own comment, site admin
   deleting any comment. (includes adding site admin)
+* User separation
+  * Keep users separate in client
+  * Return list of users in get comments `{ comments, users }`
+* User overview
+  * GDPR compliant
+  * Delete Me function
 * Backends in other languages/styles
   * Python
   * Golang
@@ -83,6 +87,38 @@ Todo:
   * Typescript
   * Microservice node.js - one service per endpoint, fat read sides
   * Serverless kubernetes/istio/...
+* Comment voting
+  * Default quality 1
+  * Vote up / down
+  * hide/show bad (quality < 0) comments
+* Reputation
+  * Gather votes on user's all comments
+  * Make reputation affect votes, or affect default comment quality?
+
+Architecture
+------------
+
+### Models
+
+#### Site
+
+#### Page
+
+#### User
+
+Using no internal ID, the user is identified by `sub` and `iss`, due to how OpenID Connect works.
+
+
+#### Comment
+
+
+### Endpoints
+
+
+### Events
+
+
+### Data flow
 
 
 Changelog
@@ -102,7 +138,7 @@ I'm making.
 License ([GNU AGPLv3](http://www.gnu.org/licenses/agpl-3.0.html))
 -----------------------------------------------------------------
 
-Copyright (C) 2020 Fredrik Liljegren <fredrik@liljegren.org>
+Copyright (C) 2021 Fredrik Liljegren <fredrik@liljegren.org>
 
 Oratorium is free software: you can redistribute it and/or modify it under the
 terms of the GNU Affero General Public License as published by the Free

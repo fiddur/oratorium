@@ -28,6 +28,7 @@
     "node-eventstore-client": "^0.2.18",
     "node-fetch": "^3.0.0",
     "openid-client": "^4.9.0",
+    "ts-http-assert": "^1.0.0",
     "uuidv4": "^6.2.12"
   }
 }

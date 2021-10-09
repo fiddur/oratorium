@@ -12,6 +12,8 @@ interface OidcProvider {
   icon: string
 }
 
+const daySeconds = 60 * 60 * 24
+
 export const authRoutes = async ({
   config: { host, oidcProviders },
   accessTokenSecret,
@@ -39,13 +41,12 @@ export const authRoutes = async ({
   )
 
   router.get('/auth/providers', (ctx) => {
-    ctx.set('Cache-Control', 'no-store, no-cache, must-revalidate')
-    ctx.set('Pragma', 'no-cache')
-    ctx.set('Expires', '0')
-    // ctx.cookies.set('accessToken', accessToken)
-    ctx.body = JSON.stringify(
-      Object.entries(oidcProviders).map(([shortName, { title, icon }]) => ({ shortName, title, icon })),
-    )
+    ctx.set('Cache-Control', `max-age=${daySeconds}`)
+    ctx.body = Object.entries(oidcProviders).map(([shortName, { title, icon }]) => ({
+      shortName,
+      title,
+      icon,
+    }))
   })
 
   router.get('/auth/:provider', (ctx) => {
@@ -84,10 +85,10 @@ export const authRoutes = async ({
     ctx.cookies.set('accessToken', accessToken)
     ctx.body = `
       <html><head></head><body>
-      <script>
-        window.opener.postMessage({ authenticated: true, user: ${JSON.stringify({ user })}}, '*')
-        window.close()
-      </script>
+        <script>
+          window.opener.postMessage({ authenticated: true, user: ${JSON.stringify({ user })}}, '*')
+          window.close()
+        </script>
       </body></html>
     `
   })

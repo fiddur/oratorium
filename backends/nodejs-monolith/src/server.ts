@@ -7,7 +7,8 @@ import cors from '@koa/cors'
 
 import { authRoutes } from './routers/authRoutes'
 import { commentRoutes } from './routers/commentRoutes'
-import { config } from './config'
+import { userRoutes } from './routers/userRoutes'
+import { config } from '../config'
 
 const accessTokenSecret = process.env.ACCESS_TOKEN_SECRET || 'changeme'
 const esEndpoint = process.env.ES_ENDPOINT || config.eventstore || 'tcp://localhost:1113'
@@ -41,11 +42,9 @@ const main = async () => {
   await new Promise((resolve) => es.once('connected', resolve)) // Add error message.
   console.log('connected es')
 
-  console.log(authRoutes)
-  const authRoutess = await authRoutes({ accessTokenSecret, config })
-  console.log(authRoutess)
-  app.use(authRoutess)
+  app.use(await authRoutes({ accessTokenSecret, config }))
   app.use(commentRoutes({ es }))
+  app.use(userRoutes({ es }))
 
   app.listen({ port, host: '0.0.0.0' })
   console.log(`Listening on ${port}`)

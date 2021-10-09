@@ -3,9 +3,17 @@ import Router, { Middleware } from '@koa/router'
 import { uuid } from 'uuidv4'
 import { DefaultState } from 'koa'
 import { AppContext } from '../server'
+import httpAssert from 'ts-http-assert'
 
-function notEmpty<TValue>(value: TValue | null | undefined): value is TValue {
-  return value !== null && value !== undefined
+const notEmpty = <T>(val: T | null | undefined): val is T => val !== null && val !== undefined
+
+interface CommentAddedEvent {
+  comment: string
+  text: string
+  user: {
+    sub: string
+    iss: string
+  }
 }
 
 export const commentRoutes = ({
@@ -33,17 +41,22 @@ export const commentRoutes = ({
   })
 
   router.put('/pages/:page/comments/:id', async (ctx) => {
-    if (!ctx.state.user) {
-      ctx.status = 401
-      return
-    }
+    httpAssert(!!ctx.state.user, 401)
 
-    const { user } = ctx.state
+    const {
+      user: { sub, iss },
+    } = ctx.state
 
+    const user = { sub, iss }
     const { text } = ctx.request.body
     const { id, page } = ctx.params
 
-    const event = createJsonEventData(uuid(), { comment: id, text, user }, null, 'CommentAdded')
+    httpAssert(!!text && text !== '', 400, 'text required')
+    httpAssert(!!id && id !== '', 400, 'comment id required')
+    httpAssert(!!page && page !== '', 400, 'page required')
+
+    const commentAdded: CommentAddedEvent = { comment: id, text, user }
+    const event = createJsonEventData(uuid(), commentAdded, null, 'CommentAdded')
     await es.appendToStream(`page-${page}`, expectedVersion.any, event)
 
     ctx.body = JSON.stringify({ text, user })

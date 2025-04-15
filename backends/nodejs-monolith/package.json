@@ -21,7 +21,7 @@
     "@koa/router": "^10.1.1",
     "@types/koa__router": "^8.0.8",
     "jsonwebtoken": "^8.5.1",
-    "koa": "^2.13.3",
+    "koa": "^2.16.1",
     "koa-body": "^4.2.0",
     "koa-jwt": "^4.0.3",
     "koa-session": "^6.2.0",
